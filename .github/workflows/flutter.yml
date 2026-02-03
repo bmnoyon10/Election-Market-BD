@@ -1,0 +1,32 @@
+name: Build APK
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Unzip project
+        run: |
+          sudo apt-get install unzip
+          unzip Election_Market_BD_FINAL.zip
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.16.0'
+
+      - name: Build APK
+        run: |
+          cd election_market_bd_final
+          flutter pub get
+          flutter build apk
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Election-Market-BD-APK
+          path: election_market_bd_final/build/app/outputs/flutter-apk/app-release.apk

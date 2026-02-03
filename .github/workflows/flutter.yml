@@ -15,21 +15,19 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y unzip
 
       - name: Unzip project
-        run: unzip Election_Market_BD_FINAL.zip
+        run: unzip Election_Market_BD_FULL_FLUTTER.zip
 
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.16.0'
 
-      - name: Find project folder and build APK
+      - name: Build APK
         run: |
-          PROJECT_DIR=$(ls -d */ | head -n 1)
-          echo "Project folder: $PROJECT_DIR"
-          cd "$PROJECT_DIR"
+          cd Election_Market_BD_FULL_FLUTTER
           flutter pub get
           flutter build apk
 
       - uses: actions/upload-artifact@v3
         with:
           name: Election-Market-BD-APK
-          path: "**/build/app/outputs/flutter-apk/app-release.apk"
+          path: Election_Market_BD_FULL_FLUTTER/build/app/outputs/flutter-apk/app-release.apk
